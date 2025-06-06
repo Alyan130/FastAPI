@@ -18,7 +18,7 @@ def get_books(genre:Literal["fiction","astronomy","horror","adventure"]=None,aut
   return ApiResponse(status_code=status.HTTP_404_NOT_FOUND,data=None)         
       
 
-@app.get("/books/{bookid}")
+@app.get("/books/{bookid}",response_model=Book)
 def single_book(bookid:int):
    for book in book_db:
      if book.book_id == bookid:
@@ -27,7 +27,7 @@ def single_book(bookid:int):
      return ApiResponse(status_code=status.HTTP_404_NOT_FOUND,data=None)
 
 
-@app.post("/book")
+@app.post("/book",response_model=Book)
 def add_book(book:Book):
     if(book):
      book_db.append(book)
@@ -37,18 +37,29 @@ def add_book(book:Book):
     
 
 
-@app.post("/books/{book_id}/review")
-def add_review(book_id:int,review:Review):
+@app.post("/books/review")
+def add_review(review:Review):
    for book in book_db:
-     if book.book_id == book_id:
+     if book.book_id == review.book_id:
          review_db.append(review)
          return ApiResponse(status_code=status.HTTP_201_CREATED,data=review)
    else:
      return ApiResponse(status_code=status.HTTP_404_NOT_FOUND, data=None)
 
 
-@app.post("/reviews")
+@app.get("/reviews",)
 def all_reviews():
    return ApiResponse(status_code=status.HTTP_200_OK,data=review_db)
 
 
+@app.get("/books/{book_id}/review")
+def single_review(book_id:int):
+   for review in review_db:
+      if review.book_id == book_id:
+         return ApiResponse(status_code=status.HTTP_200_OK,data=review)
+   else:
+     return ApiResponse(status_code=status.HTTP_404_NOT_FOUND, data=None)
+   
+
+
+   

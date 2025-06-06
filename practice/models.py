@@ -10,6 +10,7 @@ class Book(BaseModel):
 
 
 class Review(BaseModel):
+     book_id:int
      reviewer:str
      rating:int = Field(...,ge=1,le=5)
      comment: Optional[str] = None
