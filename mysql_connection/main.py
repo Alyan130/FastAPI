@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
+
 class Course(BaseModel):
     course_name:str = Field(min_length=4, max_length=100)
     price:int = Field(gt=-1)
