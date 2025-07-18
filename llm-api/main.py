@@ -12,6 +12,11 @@ class Response(BaseModel):
 class UserInput(BaseModel):
     message: str
 
+
+@app.get("/health")
+async def health_check():
+    return {"status":"ok"}  
+
 @app.post("/agent", response_model=Response)
 async def agent_endpoint(message: UserInput):
     try:

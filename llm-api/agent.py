@@ -1,6 +1,5 @@
 from agents import Agent, Runner,set_tracing_disabled,AsyncOpenAI,OpenAIChatCompletionsModel,RunContextWrapper
 from pydantic import BaseModel
-import asyncio
 from agents import GuardrailFunctionOutput, input_guardrail, output_guardrail,InputGuardrailTripwireTriggered,OutputGuardrailTripwireTriggered
 set_tracing_disabled(disabled=True)
 import os
@@ -10,7 +9,9 @@ load_dotenv()
 
 external_client = AsyncOpenAI(
     api_key = os.getenv("API_KEY"),
-    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+    timeout=120,
+    max_retries=3
 )
 
 model = OpenAIChatCompletionsModel(
