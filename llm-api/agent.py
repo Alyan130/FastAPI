@@ -53,7 +53,6 @@ async def check_education(
         tripwire_triggered= not result.final_output.is_educational
     )
 
-
 @output_guardrail
 async def check_output(
     ctx:RunContextWrapper, agent:Agent , output:str)->GuardrailFunctionOutput:
